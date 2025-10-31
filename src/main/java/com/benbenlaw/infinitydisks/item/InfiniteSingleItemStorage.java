@@ -26,8 +26,8 @@ public class InfiniteSingleItemStorage implements SerializableStorage {
     }
 
     @Override
-    public long insert(ResourceKey resource, long amount, Action action, Actor actor) {
-        if (resource instanceof ItemResource item &&
+    public long insert(ResourceKey resourceKey, long amount, Action action, Actor actor) {
+        if (resourceKey instanceof ItemResource item &&
                 ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
             return amount;
         }
@@ -35,8 +35,8 @@ public class InfiniteSingleItemStorage implements SerializableStorage {
     }
 
     @Override
-    public long extract(ResourceKey resource, long amount, Action action, Actor actor) {
-        if (resource instanceof ItemResource item &&
+    public long extract(ResourceKey resourceKey, long amount, Action action, Actor actor) {
+        if (resourceKey instanceof ItemResource item &&
                 ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
             return amount;
         }
@@ -48,13 +48,14 @@ public class InfiniteSingleItemStorage implements SerializableStorage {
         return List.of(new ResourceAmount(ItemResource.ofItemStack(infinityStack), Long.MAX_VALUE));
     }
 
+
     @Override
     public long getStored() {
-        return Long.MAX_VALUE;
+        return Long.MAX_VALUE; // always infinite
     }
 
     @Override
-    public StorageType getType() {
+    public com.refinedmods.refinedstorage.common.api.storage.StorageType getType() {
         return StorageTypes.ITEM;
     }
 }

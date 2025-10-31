@@ -38,44 +38,7 @@ public class InfinityDiskItem extends ItemStorageDiskItem {
 
     @Override
     protected SerializableStorage createStorage(StorageRepository storageRepository) {
-        // Official creative storage disk backend
-        SerializableStorage base = StorageTypes.ITEM.create(null, storageRepository::markAsChanged);
-
-        return new SerializableStorage() {
-            @Override
-            public long insert(ResourceKey resourceKey, long amount, Action action, Actor actor) {
-                if (resourceKey instanceof ItemResource item &&
-                        ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
-                    return amount;
-                }
-                return 0;
-            }
-
-            @Override
-            public long extract(ResourceKey resourceKey, long amount, Action action, Actor actor) {
-                if (resourceKey instanceof ItemResource item &&
-                        ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
-                    return amount;
-                }
-                return 0;
-            }
-
-            @Override
-            public Collection<ResourceAmount> getAll() {
-                return List.of(new ResourceAmount(ItemResource.ofItemStack(infinityStack), Long.MAX_VALUE));
-            }
-
-
-            @Override
-            public long getStored() {
-                return Long.MAX_VALUE; // always infinite
-            }
-
-            @Override
-            public com.refinedmods.refinedstorage.common.api.storage.StorageType getType() {
-                return base.getType();
-            }
-        };
+        return new InfiniteSingleItemStorage(infinityStack);
     }
 
     public ItemStack getInfinityStack() {

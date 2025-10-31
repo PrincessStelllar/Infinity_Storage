@@ -1,0 +1,1 @@
+com.benbenlaw.infinitydisks.integration.InfinityDisksKubeJSPlugin

@@ -67,11 +67,11 @@ dependencies {
     implementation "net.neoforged:neoforge:${neo_version}"
 
 
-    implementation "curse.maven:jei-238222:6614392" // JEI
+    implementation "curse.maven:jei-238222:7057366" // JEI
     implementation "curse.maven:refined-storage-243076:7039043" // RS
     implementation "curse.maven:extra-disks-351491:7032487" // RS
-    //implementation "curse.maven:industrial-foregoing-266515:7073719" // industrial foregoing
-    //implementation "curse.maven:titanium-287342:6875285" // titanium
+    implementation "curse.maven:kubejs-238086:7107528" // kubejs
+    implementation "curse.maven:rhino-416294:7104526" // rhino
 
 }
 

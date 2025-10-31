@@ -36,38 +36,32 @@ public class InfinityDiskItem extends ItemStorageDiskItem {
         return ItemStorageVariant.CREATIVE;
     }
 
-    /**
-     * Delegate to the official Creative Storage disk backend,
-     * then wrap it to only expose your single item.
-     */
     @Override
     protected SerializableStorage createStorage(StorageRepository storageRepository) {
         // Official creative storage disk backend
         SerializableStorage base = StorageTypes.ITEM.create(null, storageRepository::markAsChanged);
 
-        // Wrap it so that only our single item appears in getAll()
         return new SerializableStorage() {
             @Override
             public long insert(ResourceKey resourceKey, long amount, Action action, Actor actor) {
                 if (resourceKey instanceof ItemResource item &&
                         ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
-                    return amount; // allow full insert
+                    return amount;
                 }
-                return 0; // reject everything else
+                return 0;
             }
 
             @Override
             public long extract(ResourceKey resourceKey, long amount, Action action, Actor actor) {
                 if (resourceKey instanceof ItemResource item &&
                         ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
-                    return amount; // allow full extract
+                    return amount;
                 }
                 return 0;
             }
 
             @Override
             public Collection<ResourceAmount> getAll() {
-                // Return exactly one ResourceAmount: our infinityStack, with infinite count
                 return List.of(new ResourceAmount(ItemResource.ofItemStack(infinityStack), Long.MAX_VALUE));
             }
 

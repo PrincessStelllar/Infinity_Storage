@@ -11,6 +11,7 @@ import com.refinedmods.refinedstorage.common.storage.StorageTypes;
 import com.refinedmods.refinedstorage.common.support.resource.ItemResource;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.Serializable;
@@ -27,8 +28,7 @@ public class InfiniteSingleItemStorage implements SerializableStorage {
 
     @Override
     public long insert(ResourceKey resourceKey, long amount, Action action, Actor actor) {
-        if (resourceKey instanceof ItemResource item &&
-                ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
+        if (resourceKey instanceof ItemResource item && ItemStack.isSameItemSameComponents(item.toItemStack(), infinityStack)) {
             return amount;
         }
         return 0;
@@ -45,13 +45,22 @@ public class InfiniteSingleItemStorage implements SerializableStorage {
 
     @Override
     public Collection<ResourceAmount> getAll() {
-        return List.of(new ResourceAmount(ItemResource.ofItemStack(infinityStack), Long.MAX_VALUE));
+        return List.of(
+                new ResourceAmount(
+                        ItemResource.ofItemStack(
+                                new ItemStack(
+                                        Items.COPPER_INGOT
+                                )
+                        ),
+                        Integer.MAX_VALUE
+                )
+        );
     }
 
 
     @Override
     public long getStored() {
-        return Long.MAX_VALUE; // always infinite
+        return Integer.MAX_VALUE; // always infinite
     }
 
     @Override

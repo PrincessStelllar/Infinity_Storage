@@ -16,7 +16,12 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
-
+    maven {
+        url = 'https://maven.creeperhost.net'
+        content {
+            includeGroup("com.refinedmods.refinedstorage")
+        }
+    }
     maven {
         name = "Curse Maven"
         url = uri("https://cursemaven.com")
@@ -61,6 +66,7 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+var rsVersion = '2.0.0'
 
 dependencies {
 
@@ -68,7 +74,7 @@ dependencies {
 
 
     implementation "curse.maven:jei-238222:7057366" // JEI
-    implementation "curse.maven:refined-storage-243076:7039043" // RS
+    implementation "com.refinedmods.refinedstorage:refinedstorage-neoforge:${rsVersion}" // RS
     implementation "curse.maven:extra-disks-351491:7032487" // RS
     implementation "curse.maven:kubejs-238086:7107528" // kubejs
     implementation "curse.maven:rhino-416294:7104526" // rhino

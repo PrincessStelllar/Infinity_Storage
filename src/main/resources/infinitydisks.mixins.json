@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "com.benbenlaw.infinitydisks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinResourceRepositoryImpl"
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+
+}

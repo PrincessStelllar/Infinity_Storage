@@ -4,6 +4,7 @@ import com.refinedmods.refinedstorage.api.core.Action;
 import com.refinedmods.refinedstorage.api.resource.ResourceAmount;
 import com.refinedmods.refinedstorage.api.resource.ResourceKey;
 import com.refinedmods.refinedstorage.api.storage.Actor;
+import com.refinedmods.refinedstorage.api.storage.Storage;
 import com.refinedmods.refinedstorage.common.storage.ItemStorageVariant;
 import com.refinedmods.refinedstorage.common.storage.StorageTypes;
 import com.refinedmods.refinedstorage.common.storage.StorageVariant;
@@ -29,6 +30,7 @@ public class InfinityDiskItem extends ItemStorageDiskItem {
         super(ItemStorageVariant.CREATIVE);
         this.infinityStack = itemStack.copy();
         this.helpText = Component.literal("UNLIMITED STORAGE");
+        InfinityDiskManager.registerInfinite(infinityStack);
     }
 
     @Override
@@ -40,6 +42,8 @@ public class InfinityDiskItem extends ItemStorageDiskItem {
     protected SerializableStorage createStorage(StorageRepository storageRepository) {
         return new InfiniteSingleItemStorage(infinityStack);
     }
+
+
 
     public ItemStack getInfinityStack() {
         return infinityStack.copy();

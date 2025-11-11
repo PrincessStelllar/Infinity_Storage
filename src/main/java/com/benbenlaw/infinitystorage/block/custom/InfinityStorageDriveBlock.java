@@ -1,0 +1,116 @@
+package com.benbenlaw.infinitystorage.block.custom;
+
+import com.benbenlaw.infinitystorage.block.ISBlockEntities;
+import com.benbenlaw.infinitystorage.block.entity.InfinityStorageDriveBlockEntity;
+import com.benbenlaw.infinitystorage.screen.InfinityStorageDriveMenu;
+import com.benbenlaw.infinitystorage.screen.InfinityStorageDriveScreen;
+import com.mojang.serialization.MapCodec;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.phys.BlockHitResult;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+public class InfinityStorageDriveBlock extends BaseEntityBlock {
+
+    public static final MapCodec<InfinityStorageDriveBlock> CODEC = simpleCodec(InfinityStorageDriveBlock::new);
+    public static final DirectionProperty FACING = BlockStateProperties.FACING;
+
+    public InfinityStorageDriveBlock(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    /* ROTATION */
+    @Override
+    public @NotNull BlockState rotate(BlockState blockState, @NotNull LevelAccessor level, @NotNull BlockPos blockPos, Rotation direction) {
+        return blockState.setValue(FACING, direction.rotate(blockState.getValue(FACING)));
+
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(FACING);
+    }
+
+    @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        return this.defaultBlockState().setValue(FACING, context.getNearestLookingDirection().getOpposite());
+    }
+
+
+    /* BLOCK ENTITY */
+    @SuppressWarnings("deprecation")
+    @Override
+    public @NotNull RenderShape getRenderShape(@NotNull BlockState blockState) {
+        return RenderShape.MODEL;
+    }
+
+
+    @Override
+    public void onRemove(BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, BlockState newBlockState, boolean isMoving) {
+        if (blockState.getBlock() != newBlockState.getBlock()) {
+            BlockEntity blockEntity = level.getBlockEntity(blockPos);
+            if (blockEntity instanceof InfinityStorageDriveBlockEntity) {
+                ((InfinityStorageDriveBlockEntity) blockEntity).drops();
+            }
+        }
+        super.onRemove(blockState, level, blockPos, newBlockState, isMoving);
+    }
+
+    @Override
+    public @NotNull InteractionResult useWithoutItem(@NotNull BlockState blockState, Level level, @NotNull BlockPos blockPos, @NotNull Player player, @NotNull BlockHitResult hit) {
+
+        if (level.isClientSide()) {
+            return InteractionResult.SUCCESS;
+        }
+
+        if (!level.isClientSide()) {
+            InfinityStorageDriveBlockEntity blockEntity = (InfinityStorageDriveBlockEntity) level.getBlockEntity(blockPos);
+
+            //Open the menu
+            if (blockEntity instanceof InfinityStorageDriveBlockEntity) {
+                player.openMenu(new SimpleMenuProvider(
+                        (windowId, playerInventory, playerEntity) -> new InfinityStorageDriveMenu(windowId, playerInventory, blockPos),
+                        Component.translatable("block.infinitystorage.infinity_storage_drive")), (buf -> buf.writeBlockPos(blockPos)));
+            }
+            return InteractionResult.SUCCESS;
+
+        }
+        return InteractionResult.FAIL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(@NotNull BlockPos blockPos, @NotNull BlockState blockState) {
+        return new InfinityStorageDriveBlockEntity(blockPos, blockState);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NotNull Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> blockEntityType) {
+        return createTickerHelper(blockEntityType, ISBlockEntities.INFINITY_STORAGE_DRIVE_BLOCK_ENTITY.get(),
+                (world, blockPos, thisBlockState, blockEntity) -> blockEntity.tick());
+    }
+}

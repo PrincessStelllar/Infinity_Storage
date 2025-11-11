@@ -72,6 +72,12 @@ dependencies {
     implementation "curse.maven:extra-disks-351491:7032487" // RS
     implementation "curse.maven:kubejs-238086:7107528" // kubejs
     implementation "curse.maven:rhino-416294:7104526" // rhino
+    implementation "curse.maven:guideme-1173950:7127444" // GuideME
+    implementation "curse.maven:applied-energistics-2-223794:7027323" // AE2
+    implementation "curse.maven:ae2-jei-integration-1074338:5748513" // AE2-JEI
+    implementation "curse.maven:bbl-routers-1334500:7107009" // bbl routers
+
+
 
 }
 

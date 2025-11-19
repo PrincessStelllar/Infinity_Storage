@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "B": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "C": {
+      "tag": "c:storage_blocks/diamond"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "infinitystorage:infinity_storage_drive"
+  }
+}

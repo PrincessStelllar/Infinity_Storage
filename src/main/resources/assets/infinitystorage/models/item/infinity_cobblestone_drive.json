@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "infinitystorage:item/infinity_cobblestone_drive"
+  }
+}

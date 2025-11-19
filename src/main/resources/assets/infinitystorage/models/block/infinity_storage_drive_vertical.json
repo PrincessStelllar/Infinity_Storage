@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/orientable_vertical",
+  "textures": {
+    "front": "infinitystorage:block/infinity_storage_drive_front",
+    "side": "infinitystorage:block/machine_side"
+  }
+}

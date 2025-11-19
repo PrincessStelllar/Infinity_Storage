@@ -1,0 +1,12 @@
+Infinity Drives
+
+ADD TO MODRINTH
+
+1.0.1
+- Added pickaxe tag to Storage Block
+- Fixed block having wrong item model
+- Added Infinity Storage Drive Block recipe
+- Added auto updating for CurseForge
+
+1.0.0
+- Initial release

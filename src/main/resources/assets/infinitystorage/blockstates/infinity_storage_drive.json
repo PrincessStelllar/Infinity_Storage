@@ -1,0 +1,26 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "infinitystorage:block/infinity_storage_drive_vertical",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "infinitystorage:block/infinity_storage_drive",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "infinitystorage:block/infinity_storage_drive"
+    },
+    "facing=south": {
+      "model": "infinitystorage:block/infinity_storage_drive",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "infinitystorage:block/infinity_storage_drive_vertical"
+    },
+    "facing=west": {
+      "model": "infinitystorage:block/infinity_storage_drive",
+      "y": 270
+    }
+  }
+}

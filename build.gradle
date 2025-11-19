@@ -134,13 +134,12 @@ idea {
     }
 }
 
-/*
 tasks.register('publishCurseForge', TaskPublishCurseForge) {
     group "modpublishing"
 
     apiToken = System.getenv("curseforge_token").toString()
 
-    def projectId = 1340405
+    def projectId = 1386843
     def mainFile = upload(projectId, jar)
 
     mainFile.changelog = changelog
@@ -152,11 +151,12 @@ tasks.register('publishCurseForge', TaskPublishCurseForge) {
 
 tasks.getByName("modrinth").setGroup("modpublishing")
 
+
 modrinth {
     token = System.getenv("modrinth_token").toString()
-    projectId = "ezFzKzSp"
+    projectId = "AmuEkcO2"
     versionType = "release"
-    versionName = "routers-" + "$minecraft_version" + "-" + "$mod_version"
+    versionName = "infintiystorage-" + "$minecraft_version" + "-" + "$mod_version"
     uploadFile = jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
 
     gameVersions.addAll(minecraft_version)
@@ -168,4 +168,3 @@ modrinth {
     }
 }
 
- */
